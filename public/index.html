@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BarterHub Europa — L'Art du Troc, Achat & Location en Europe</title>
+  <meta name="description" content="BarterHub Europa is the premier European peer-to-peer exchange platform. Trade items without money, buy pre-loved treasures in Euros, or rent gear by the day across Europe." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🇪🇺</text></svg>" />
+</head>
+<body>
+  <!-- Toast container -->
+  <div id="toast-container" aria-live="polite"></div>
+
+  <!-- Notification panel -->
+  <div id="notification-panel" class="notification-panel hidden">
+    <div class="notif-header">
+      <h3>Notifications</h3>
+      <button id="mark-all-read-btn" class="btn-link">Mark all read</button>
+    </div>
+    <div id="notification-list" class="notif-list"></div>
+  </div>
+  <div id="notif-overlay" class="notif-overlay hidden"></div>
+
+  <!-- NAV -->
+  <nav id="navbar" class="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-logo" onclick="showPage('home')">
+        <span class="logo-icon">🇪🇺</span>
+        <div class="logo-brand">
+          <span class="logo-text">BarterHub</span>
+          <span class="logo-subtext">EUROPA</span>
+        </div>
+      </a>
+      <div class="nav-links" id="nav-links">
+        <a href="#" class="nav-link" onclick="showPage('browse')">Explore Listings</a>
+        <a href="#" class="nav-link" id="nav-my-items" onclick="showPage('my-items')" style="display:none">My Listings</a>
+        <a href="#" class="nav-link" id="nav-favorites" onclick="showPage('favorites')" style="display:none">❤️ Favorites</a>
+        <a href="#" class="nav-link" id="nav-trades" onclick="showPage('trades')" style="display:none">My Trades</a>
+        <a href="#" class="nav-link" id="nav-chat" onclick="showPage('chat')" style="display:none">
+          Messages <span id="unread-badge" class="badge hidden">0</span>
+        </a>
+      </div>
+      <div class="nav-actions">
+        <div id="guest-actions" class="guest-actions">
+          <button class="btn btn-ghost" onclick="showPage('login')">Sign In</button>
+          <button class="btn btn-primary" onclick="showPage('login', 'register')">Join Europa</button>
+        </div>
+        <div id="user-actions" class="user-actions hidden">
+          <button class="btn btn-primary btn-sm" onclick="promptServiceChoice()">+ Post (Sell / Rent / Barter)</button>
+          <div class="notif-btn-wrapper">
+            <button class="icon-btn" id="notif-btn" onclick="toggleNotifications()">
+              🔔 <span id="notif-badge" class="badge hidden">0</span>
+            </button>
+          </div>
+          <div class="avatar-menu">
+            <button class="avatar-btn" id="avatar-btn" onclick="toggleAvatarMenu()">
+              <img src="" alt="Avatar" id="nav-avatar" class="nav-avatar" />
+              <span id="nav-username"></span>
+              <span>▾</span>
+            </button>
+            <div class="avatar-dropdown hidden" id="avatar-dropdown">
+              <a href="#" onclick="showPage('profile')">👤 My Profile</a>
+              <a href="#" onclick="showPage('favorites')">❤️ My Favorites</a>
+              <a href="#" onclick="showPage('trades')">🤝 My Trades</a>
+              <a href="#" onclick="showPage('settings')">⚙️ Settings</a>
+              <hr />
+              <a href="#" onclick="logout()" class="text-red">🚪 Sign Out</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Demo Account Quick Switcher Bar -->
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-bar-inner">
+      <span class="demo-bar-label">⚡ Quick Demo Login:</span>
+      <button class="demo-chip" onclick="quickLogin('julien@barterhub.eu')">🇫🇷 Julien (Paris)</button>
+      <button class="demo-chip" onclick="quickLogin('elena@barterhub.eu')">🇩🇪 Elena (Berlin)</button>
+      <button class="demo-chip" onclick="quickLogin('lars@barterhub.eu')">🇳🇱 Lars (Amsterdam)</button>
+      <button class="demo-chip" onclick="quickLogin('sofia@barterhub.eu')">🇮🇹 Sofia (Milan)</button>
+      <button class="demo-chip" onclick="quickLogin('mateo@barterhub.eu')">🇪🇸 Mateo (Barcelona)</button>
+    </div>
+  </div>
+
+  <!-- PAGES -->
+  <main id="app">
+
+    <!-- HOME PAGE -->
+    <section id="page-home" class="page active">
+      <div class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+          <div class="hero-badge">✨ 🇪🇺 European Peer-to-Peer Marketplace · Troc, Vente & Location</div>
+          <h1 class="hero-title">Trade, Sell & Rent Across Europe,<br/><span class="gradient-text">L'Art de l'Échange</span></h1>
+          <p class="hero-subtitle">Exchange pre-loved items without money, purchase directly in € Euros, or rent professional gear by the day across Paris, Berlin, Amsterdam, Milan and beyond.</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary btn-xl" onclick="showPage('browse')">Explore All Listings</button>
+            <button class="btn btn-ghost btn-xl" onclick="promptServiceChoice()">+ Post Listing (Sell / Rent / Barter)</button>
+          </div>
+          <div class="hero-stats">
+            <div class="stat"><span id="stat-users">28,400</span><small>European Traders</small></div>
+            <div class="stat"><span id="stat-items">14,250</span><small>Active Listings</small></div>
+            <div class="stat"><span id="stat-trades">9,820</span><small>Deals Completed</small></div>
+          </div>
+        </div>
+        <div class="hero-illustration">
+          <div class="floating-card card-1">
+            <div class="item-preview">
+              <span class="item-emoji">🎻</span>
+              <div>
+                <strong>Höfner Bass</strong>
+                <small>Berlin 🇩🇪 · For Synth</small>
+              </div>
+            </div>
+          </div>
+          <div class="floating-card card-2">
+            <div class="item-preview">
+              <span class="item-emoji">📷</span>
+              <div>
+                <strong>Sony A7IV / Leica</strong>
+                <small>Paris 🇫🇷 · Barter</small>
+              </div>
+            </div>
+          </div>
+          <div class="floating-card card-3">
+            <div class="item-preview">
+              <span class="item-emoji">🚴</span>
+              <div>
+                <strong>Canyon Carbon Bike</strong>
+                <small>Amsterdam 🇳🇱 · Trade</small>
+              </div>
+            </div>
+          </div>
+          <div class="trade-arrows">⇄</div>
+        </div>
+      </div>
+
+      <!-- Categories Section -->
+      <div class="section">
+        <div class="section-header">
+          <h2>Browse by Category</h2>
+          <p>Find items in your favorite categories</p>
+        </div>
+        <div class="categories-grid">
+          <div class="category-card" onclick="browseCat('Electronics')">
+            <span class="cat-icon">📱</span>
+            <span>Electronics</span>
+          </div>
+          <div class="category-card" onclick="browseCat('Clothing')">
+            <span class="cat-icon">👗</span>
+            <span>Clothing</span>
+          </div>
+          <div class="category-card" onclick="browseCat('Books')">
+            <span class="cat-icon">📚</span>
+            <span>Books</span>
+          </div>
+          <div class="category-card" onclick="browseCat('Furniture')">
+            <span class="cat-icon">🛋️</span>
+            <span>Furniture</span>
+          </div>
+          <div class="category-card" onclick="browseCat('Sports')">
+            <span class="cat-icon">⚽</span>
+            <span>Sports</span>
+          </div>
+          <div class="category-card" onclick="browseCat('Music')">
+            <span class="cat-icon">🎵</span>
+            <span>Music</span>
+          </div>
+          <div class="category-card" onclick="browseCat('Art')">
+            <span class="cat-icon">🎨</span>
+            <span>Art</span>
+          </div>
+          <div class="category-card" onclick="browseCat('Toys')">
+            <span class="cat-icon">🧸</span>
+            <span>Toys</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured Items -->
+      <div class="section">
+        <div class="section-header">
+          <h2>Latest Items</h2>
+          <a href="#" class="view-all" onclick="showPage('browse')">View All →</a>
+        </div>
+        <div id="home-items-grid" class="items-grid">
+          <div class="loading-skeleton"></div>
+          <div class="loading-skeleton"></div>
+          <div class="loading-skeleton"></div>
+          <div class="loading-skeleton"></div>
+        </div>
+      </div>
+
+      <!-- How It Works -->
+      <div class="section how-it-works">
+        <div class="section-header">
+          <h2>How BarterHub Works</h2>
+        </div>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-num">01</div>
+            <div class="step-icon">📸</div>
+            <h3>Post Your Item</h3>
+            <p>List items you want to trade with photos, description and what you're looking for</p>
+          </div>
+          <div class="step-card">
+            <div class="step-num">02</div>
+            <div class="step-icon">🔍</div>
+            <h3>Browse & Discover</h3>
+            <p>Search through thousands of items, filter by category and connect with traders</p>
+          </div>
+          <div class="step-card">
+            <div class="step-num">03</div>
+            <div class="step-icon">🤝</div>
+            <h3>Make a Trade</h3>
+            <p>Send a trade proposal, negotiate via chat, and complete your barter deal</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BROWSE PAGE -->
+    <section id="page-browse" class="page">
+      <div class="page-header">
+        <h1>Browse Items</h1>
+        <p>Discover items available for trade near you</p>
+      </div>
+      <div class="browse-layout">
+        <!-- Filters sidebar -->
+        <aside class="filters-sidebar">
+          <div class="filter-group">
+            <label>Search</label>
+            <input type="text" id="search-input" class="input" placeholder="Search items..." oninput="debounceSearch()" />
+          </div>
+          <div class="filter-group">
+            <label>Listing Option</label>
+            <select id="filter-listing-type" class="input" onchange="syncListingTypeDropdown(this.value)">
+              <option value="all">All Options</option>
+              <option value="barter">🔄 Barter (Trade)</option>
+              <option value="sell">🏷️ For Sale</option>
+              <option value="rent">⏱️ For Rent</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Category</label>
+            <select id="filter-category" class="input" onchange="loadItems()">
+              <option value="All">All Categories</option>
+              <option>Electronics</option>
+              <option>Clothing</option>
+              <option>Books</option>
+              <option>Furniture</option>
+              <option>Sports</option>
+              <option>Toys</option>
+              <option>Music</option>
+              <option>Art</option>
+              <option>Vehicles</option>
+              <option>Tools</option>
+              <option>Kitchen</option>
+              <option>Jewelry</option>
+              <option>Garden</option>
+              <option>Health</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Condition</label>
+            <select id="filter-condition" class="input" onchange="loadItems()">
+              <option value="All">All Conditions</option>
+              <option>New</option>
+              <option>Like New</option>
+              <option>Good</option>
+              <option>Fair</option>
+              <option>Poor</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>European Location</label>
+            <select id="filter-location" class="input" onchange="loadItems()">
+              <option value="all">🇪🇺 All Europe</option>
+              <option value="Paris">🇫🇷 Paris, France</option>
+              <option value="Berlin">🇩🇪 Berlin, Germany</option>
+              <option value="Amsterdam">🇳🇱 Amsterdam, Netherlands</option>
+              <option value="Milan">🇮🇹 Milan, Italy</option>
+              <option value="Barcelona">🇪🇸 Barcelona, Spain</option>
+              <option value="Vienna">🇦🇹 Vienna, Austria</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Value / Price Range (€ EUR)</label>
+            <div style="display:flex;gap:8px">
+              <input type="number" id="filter-min-val" class="input" placeholder="Min €" min="0" oninput="debounceSearch()" style="width:50%" />
+              <input type="number" id="filter-max-val" class="input" placeholder="Max €" min="0" oninput="debounceSearch()" style="width:50%" />
+            </div>
+          </div>
+          <div class="filter-group">
+            <label>Sort By</label>
+            <select id="filter-sort" class="input" onchange="loadItems()">
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="valueHigh">Value: High to Low</option>
+              <option value="valueLow">Value: Low to High</option>
+              <option value="mostViewed">Most Viewed</option>
+            </select>
+          </div>
+          <button class="btn btn-ghost" onclick="clearFilters()">Clear Filters</button>
+        </aside>
+
+        <!-- Items grid -->
+        <div class="items-area">
+          <div class="type-pills" id="browse-type-pills">
+            <button class="type-pill active" onclick="setListingTypeFilter('all', this)">🌐 All Options</button>
+            <button class="type-pill" onclick="setListingTypeFilter('barter', this)">🔄 Barter (Trade)</button>
+            <button class="type-pill pill-sell" onclick="setListingTypeFilter('sell', this)">🏷️ For Sale</button>
+            <button class="type-pill pill-rent" onclick="setListingTypeFilter('rent', this)">⏱️ For Rent</button>
+          </div>
+          <div class="items-toolbar">
+            <span id="items-count" class="items-count"></span>
+          </div>
+          <div id="browse-items-grid" class="items-grid"></div>
+          <div id="pagination" class="pagination"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MY ITEMS PAGE -->
+    <section id="page-my-items" class="page">
+      <div class="page-header">
+        <h1>My Items</h1>
+        <button class="btn btn-primary" onclick="showModal('post-item-modal')">+ Post New Item</button>
+      </div>
+      <div id="my-items-grid" class="items-grid"></div>
+    </section>
+
+    <!-- FAVORITES PAGE -->
+    <section id="page-favorites" class="page">
+      <div class="page-header">
+        <h1>My Favorites ❤️</h1>
+        <p>Pre-loved European items you have saved</p>
+      </div>
+      <div id="favorites-grid" class="items-grid"></div>
+    </section>
+
+    <!-- TRADES PAGE -->
+    <section id="page-trades" class="page">
+      <div class="page-header">
+        <h1>My Trades</h1>
+      </div>
+      <div class="trade-tabs">
+        <button class="trade-tab active" onclick="filterTrades('all', this)">All</button>
+        <button class="trade-tab" onclick="filterTrades('pending', this)">Pending</button>
+        <button class="trade-tab" onclick="filterTrades('accepted', this)">Accepted</button>
+        <button class="trade-tab" onclick="filterTrades('completed', this)">Completed</button>
+      </div>
+      <div id="trades-list" class="trades-list"></div>
+    </section>
+
+    <!-- CHAT PAGE -->
+    <section id="page-chat" class="page">
+      <div class="chat-layout">
+        <div class="chat-sidebar">
+          <div class="chat-sidebar-header">
+            <h2>Messages</h2>
+          </div>
+          <div id="conversations-list" class="conversations-list"></div>
+        </div>
+        <div class="chat-main" id="chat-main">
+          <div class="chat-empty">
+            <div class="chat-empty-icon">💬</div>
+            <h3>Select a conversation</h3>
+            <p>Choose from your existing conversations or start a new one</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROFILE PAGE -->
+    <section id="page-profile" class="page">
+      <div id="profile-content"></div>
+    </section>
+
+    <!-- SETTINGS PAGE -->
+    <section id="page-settings" class="page">
+      <div class="settings-container">
+        <h1>Account Settings</h1>
+        <div class="settings-card">
+          <h3>Profile Information</h3>
+          <form id="settings-form" onsubmit="updateProfile(event)">
+            <div class="avatar-upload-area">
+              <img id="settings-avatar" src="" alt="Avatar" class="settings-avatar" />
+              <label for="avatar-file" class="btn btn-ghost btn-sm">Change Photo</label>
+              <input type="file" id="avatar-file" accept="image/*" class="hidden" onchange="previewAvatar(event)" />
+            </div>
+            <div class="form-group">
+              <label>Username</label>
+              <input type="text" id="settings-username" class="input" />
+            </div>
+            <div class="form-group">
+              <label>Location</label>
+              <input type="text" id="settings-location" class="input" placeholder="City, Country" />
+            </div>
+            <div class="form-group">
+              <label>Bio</label>
+              <textarea id="settings-bio" class="input" rows="4" placeholder="Tell others about yourself..." maxlength="300"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ITEM DETAIL PAGE -->
+    <section id="page-item-detail" class="page">
+      <div id="item-detail-content"></div>
+    </section>
+
+    <!-- DEDICATED LOGIN & REGISTRATION PAGE -->
+    <section id="page-login" class="page">
+      <div class="auth-page-container">
+        <div class="auth-card">
+          <!-- Auth Brand Header -->
+          <div class="auth-brand">
+            <span class="auth-flag">🇪🇺</span>
+            <div class="auth-logo-text">BarterHub Europa</div>
+            <p class="auth-tagline">L'Art de l'Échange, Achat & Location de Matériel en Europe</p>
+          </div>
+
+          <!-- Auth Mode Segmented Tabs -->
+          <div class="auth-tabs">
+            <button class="auth-tab active" id="tab-auth-login" onclick="switchAuthTab('login')">Sign In</button>
+            <button class="auth-tab" id="tab-auth-register" onclick="switchAuthTab('register')">Create Account</button>
+          </div>
+
+          <!-- Instant European Demo Quick Sign-in -->
+          <div class="auth-demo-section">
+            <div class="auth-demo-title">⚡ Instant Demo Sign-In (One-Click)</div>
+            <div class="auth-demo-grid">
+              <button type="button" class="auth-demo-btn" onclick="quickLogin('julien@barterhub.eu')">
+                <span class="demo-flag">🇫🇷</span>
+                <span class="demo-user">Julien</span>
+                <span class="demo-city">Paris</span>
+              </button>
+              <button type="button" class="auth-demo-btn" onclick="quickLogin('elena@barterhub.eu')">
+                <span class="demo-flag">🇩🇪</span>
+                <span class="demo-user">Elena</span>
+                <span class="demo-city">Berlin</span>
+              </button>
+              <button type="button" class="auth-demo-btn" onclick="quickLogin('lars@barterhub.eu')">
+                <span class="demo-flag">🇳🇱</span>
+                <span class="demo-user">Lars</span>
+                <span class="demo-city">Amsterdam</span>
+              </button>
+              <button type="button" class="auth-demo-btn" onclick="quickLogin('sofia@barterhub.eu')">
+                <span class="demo-flag">🇮🇹</span>
+                <span class="demo-user">Sofia</span>
+                <span class="demo-city">Milan</span>
+              </button>
+              <button type="button" class="auth-demo-btn" onclick="quickLogin('mateo@barterhub.eu')">
+                <span class="demo-flag">🇪🇸</span>
+                <span class="demo-user">Mateo</span>
+                <span class="demo-city">Barcelona</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Sign In Form View -->
+          <div id="view-auth-login" class="auth-view">
+            <form id="dedicated-login-form" onsubmit="handleDedicatedLogin(event)">
+              <div class="form-group">
+                <label for="dedicated-login-email">Email Address</label>
+                <input type="email" id="dedicated-login-email" class="input" placeholder="e.g. julien@barterhub.eu" required />
+              </div>
+              <div class="form-group">
+                <label for="dedicated-login-password">Password</label>
+                <input type="password" id="dedicated-login-password" class="input" placeholder="••••••••" required />
+              </div>
+              <button type="submit" class="btn btn-primary btn-full btn-lg" id="dedicated-login-btn">
+                Sign In to BarterHub
+              </button>
+            </form>
+          </div>
+
+          <!-- Register Form View -->
+          <div id="view-auth-register" class="auth-view hidden">
+            <form id="dedicated-register-form" onsubmit="handleDedicatedRegister(event)">
+              <div class="form-group">
+                <label for="dedicated-reg-username">Username</label>
+                <input type="text" id="dedicated-reg-username" class="input" placeholder="e.g. claudia_rome" required minlength="3" />
+              </div>
+              <div class="form-group">
+                <label for="dedicated-reg-email">Email Address</label>
+                <input type="email" id="dedicated-reg-email" class="input" placeholder="you@domain.eu" required />
+              </div>
+              <div class="form-group">
+                <label for="dedicated-reg-password">Password</label>
+                <input type="password" id="dedicated-reg-password" class="input" placeholder="At least 6 characters" required minlength="6" />
+              </div>
+              <div class="form-group">
+                <label for="dedicated-reg-location">European Location</label>
+                <input type="text" id="dedicated-reg-location" class="input" placeholder="e.g. Rome, Italy 🇮🇹" />
+              </div>
+              <button type="submit" class="btn btn-primary btn-full btn-lg" id="dedicated-reg-btn">
+                Create Free Account
+              </button>
+            </form>
+          </div>
+
+          <!-- Security Footnote -->
+          <div class="auth-security-badges">
+            <span>🛡️ Escrow Handover Protection</span>
+            <span>·</span>
+            <span>🇪🇺 100% Peer-to-Peer</span>
+            <span>·</span>
+            <span>⭐ Verified Community</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODALS -->
+  <!-- Service Intent Modal (On Time of Servicing: Sell, Rent, or Exchange) -->
+  <div id="service-intent-modal" class="modal-overlay hidden">
+    <div class="modal modal-lg service-intent-modal-card">
+      <button class="modal-close" onclick="hideModal('service-intent-modal')">✕</button>
+      <div class="service-intent-header">
+        <span class="service-intent-flag">🇪🇺</span>
+        <h2>Choose Your Mode of Service</h2>
+        <p>What would you like to do on BarterHub Europa? Select your servicing option to continue:</p>
+      </div>
+
+      <div class="service-cards-grid">
+        <!-- 1. Barter / Exchange (Troc) -->
+        <div class="service-choice-card choice-barter" onclick="chooseServiceMode('barter')">
+          <div class="service-choice-badge">🔄 Cashless Troc</div>
+          <div class="service-choice-icon">🤝</div>
+          <h3>Barter & Exchange</h3>
+          <p>Exchange pre-loved treasures with collectors across Europe without spending money. Offer what you have for what you need.</p>
+          <div class="service-choice-highlight">✓ 0% commission · Escrow Protected</div>
+          <div class="service-choice-btns">
+            <button class="btn btn-primary btn-full btn-sm" onclick="event.stopPropagation(); startServiceListing('barter')">
+              + Post Barter / Troc
+            </button>
+            <button class="btn btn-ghost btn-full btn-xs" onclick="event.stopPropagation(); browseServiceMode('barter')">
+              Browse Barter Items →
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. Direct Sale (Vente) -->
+        <div class="service-choice-card choice-sell" onclick="chooseServiceMode('sell')">
+          <div class="service-choice-badge badge-sell">🏷️ Achat & Vente en €</div>
+          <div class="service-choice-icon">💶</div>
+          <h3>Sell for Direct Cash</h3>
+          <p>List your items with a fixed price in Euros (€). Connect with verified European buyers for immediate sale and payment.</p>
+          <div class="service-choice-highlight">✓ Fixed pricing in € · Fast liquidity</div>
+          <div class="service-choice-btns">
+            <button class="btn btn-success btn-full btn-sm" onclick="event.stopPropagation(); startServiceListing('sell')">
+              + List for Sale (€)
+            </button>
+            <button class="btn btn-ghost btn-full btn-xs" onclick="event.stopPropagation(); browseServiceMode('sell')">
+              Browse Items for Sale →
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. Rent Equipment (Location) -->
+        <div class="service-choice-card choice-rent" onclick="chooseServiceMode('rent')">
+          <div class="service-choice-badge badge-rent">⏱️ Location de Matériel</div>
+          <div class="service-choice-icon">📷</div>
+          <h3>Rent Equipment</h3>
+          <p>Rent out camera gear, audio equipment, studio synthesizers, bikes, or roof boxes by the hour, day, week, or month.</p>
+          <div class="service-choice-highlight">✓ Daily € rates · Security deposit safeguard</div>
+          <div class="service-choice-btns">
+            <button class="btn btn-warning btn-full btn-sm" onclick="event.stopPropagation(); startServiceListing('rent')">
+              + Post Rental Listing
+            </button>
+            <button class="btn btn-ghost btn-full btn-xs" onclick="event.stopPropagation(); browseServiceMode('rent')">
+              Browse Rentals →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="service-intent-footer">
+        <button class="btn-link" onclick="hideModal('service-intent-modal'); showPage('browse')">
+          Just exploring? Browse all European listings →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="login-modal" class="modal-overlay hidden">
+    <div class="modal">
+      <button class="modal-close" onclick="hideModal('login-modal')">✕</button>
+      <div class="modal-header">
+        <h2>Welcome Back! 👋</h2>
+        <p>Sign in to your BarterHub account</p>
+      </div>
+      <form id="login-form" onsubmit="login(event)">
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" class="input" placeholder="you@example.com" required />
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" class="input" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="btn btn-primary btn-full" id="login-btn">Sign In</button>
+      </form>
+      <p class="modal-footer">Don't have an account? <a href="#" onclick="switchModal('login-modal','register-modal')">Sign Up</a></p>
+    </div>
+  </div>
+
+  <!-- Register Modal -->
+  <div id="register-modal" class="modal-overlay hidden">
+    <div class="modal">
+      <button class="modal-close" onclick="hideModal('register-modal')">✕</button>
+      <div class="modal-header">
+        <h2>Join BarterHub 🔄</h2>
+        <p>Create your free account and start trading</p>
+      </div>
+      <form id="register-form" onsubmit="register(event)">
+        <div class="form-group">
+          <label for="reg-username">Username</label>
+          <input type="text" id="reg-username" class="input" placeholder="Choose a username" required minlength="3" />
+        </div>
+        <div class="form-group">
+          <label for="reg-email">Email</label>
+          <input type="email" id="reg-email" class="input" placeholder="you@example.com" required />
+        </div>
+        <div class="form-group">
+          <label for="reg-password">Password</label>
+          <input type="password" id="reg-password" class="input" placeholder="At least 6 characters" required minlength="6" />
+        </div>
+        <div class="form-group">
+          <label for="reg-location">Location (optional)</label>
+          <input type="text" id="reg-location" class="input" placeholder="City, Country" />
+        </div>
+        <button type="submit" class="btn btn-primary btn-full" id="register-btn">Create Account</button>
+      </form>
+      <p class="modal-footer">Already have an account? <a href="#" onclick="switchModal('register-modal','login-modal')">Sign In</a></p>
+    </div>
+  </div>
+
+  <!-- Post Item Modal -->
+  <div id="post-item-modal" class="modal-overlay hidden">
+    <div class="modal modal-lg">
+      <button class="modal-close" onclick="hideModal('post-item-modal')">✕</button>
+      <div class="modal-header">
+        <h2>Post an Item (Barter, Sell, or Rent)</h2>
+        <p>Choose your listing option and share what you have</p>
+      </div>
+      <form id="post-item-form" onsubmit="postItem(event)">
+        <!-- Listing Option Selector -->
+        <div class="form-group">
+          <label>Listing Option *</label>
+          <div class="listing-type-selector">
+            <button type="button" class="type-option-btn selected" id="opt-barter" onclick="selectListingType('barter')">
+              <span style="font-size:22px">🔄</span>
+              <span>Barter (Trade)</span>
+            </button>
+            <button type="button" class="type-option-btn opt-sell" id="opt-sell" onclick="selectListingType('sell')">
+              <span style="font-size:22px">🏷️</span>
+              <span>Sell Item</span>
+            </button>
+            <button type="button" class="type-option-btn opt-rent" id="opt-rent" onclick="selectListingType('rent')">
+              <span style="font-size:22px">⏱️</span>
+              <span>Rent Out</span>
+            </button>
+          </div>
+          <input type="hidden" id="item-listing-type" value="barter" />
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Title *</label>
+            <input type="text" id="item-title" class="input" placeholder="What are you offering?" required maxlength="100" />
+          </div>
+          <div class="form-group">
+            <label>Category *</label>
+            <select id="item-category" class="input" required>
+              <option value="">Select category</option>
+              <option>Electronics</option>
+              <option>Clothing</option>
+              <option>Books</option>
+              <option>Furniture</option>
+              <option>Sports</option>
+              <option>Toys</option>
+              <option>Music</option>
+              <option>Art</option>
+              <option>Vehicles</option>
+              <option>Tools</option>
+              <option>Kitchen</option>
+              <option>Jewelry</option>
+              <option>Garden</option>
+              <option>Health</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Condition *</label>
+            <select id="item-condition" class="input" required>
+              <option value="">Select condition</option>
+              <option>New</option>
+              <option>Like New</option>
+              <option>Good</option>
+              <option>Fair</option>
+              <option>Poor</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Estimated Market Value (€ EUR)</label>
+            <input type="number" id="item-value" class="input" placeholder="0" min="0" />
+          </div>
+        </div>
+
+        <!-- Dynamic Group: Barter Wishlist -->
+        <div id="field-barter-group" class="form-group">
+          <label>Looking For in Exchange (Barter Wishlist)</label>
+          <input type="text" id="item-looking-for" class="input" placeholder="e.g. Vintage Leica M6, Moog synth, Canyon road bike..." maxlength="300" />
+        </div>
+
+        <!-- Dynamic Group: Sell Price -->
+        <div id="field-sell-group" class="form-group hidden">
+          <label>Selling Price (€ EUR) *</label>
+          <input type="number" id="item-price" class="input" placeholder="e.g. 250" min="1" step="any" />
+        </div>
+
+        <!-- Dynamic Group: Rent Details -->
+        <div id="field-rent-group" class="form-grid hidden">
+          <div class="form-group">
+            <label>Rental Rate (€ EUR) *</label>
+            <input type="number" id="item-rent-price" class="input" placeholder="e.g. 25" min="1" step="any" />
+          </div>
+          <div class="form-group">
+            <label>Rental Period *</label>
+            <select id="item-rent-period" class="input">
+              <option value="day">Per Day (Par Jour)</option>
+              <option value="week">Per Week (Par Semaine)</option>
+              <option value="month">Per Month (Par Mois)</option>
+              <option value="hour">Per Hour (Par Heure)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Security Deposit (€ EUR)</label>
+            <input type="number" id="item-deposit" class="input" placeholder="e.g. 100" min="0" step="any" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Description *</label>
+          <textarea id="item-description" class="input" rows="4" placeholder="Describe your item in detail..." required maxlength="1000"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Tags (comma-separated)</label>
+          <input type="text" id="item-tags" class="input" placeholder="e.g. vintage, rare, mint-condition" />
+        </div>
+        <div class="form-group">
+          <label>Photos (up to 5)</label>
+          <div class="file-upload-area" onclick="document.getElementById('item-images').click()">
+            <span>📸 Click to upload images</span>
+            <small>JPG, PNG, WebP up to 5MB each</small>
+          </div>
+          <input type="file" id="item-images" multiple accept="image/*" class="hidden" onchange="previewImages(event)" />
+          <div id="image-previews" class="image-previews"></div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full" id="post-item-btn">Post Listing</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Trade Proposal Modal -->
+  <div id="trade-modal" class="modal-overlay hidden">
+    <div class="modal modal-lg">
+      <button class="modal-close" onclick="hideModal('trade-modal')">✕</button>
+      <div class="modal-header">
+        <h2>Propose a Trade 🤝</h2>
+        <p>Choose your items to offer in exchange</p>
+      </div>
+      <div id="trade-modal-content"></div>
+    </div>
+  </div>
+
+  <!-- Rating Modal -->
+  <div id="rating-modal" class="modal-overlay hidden">
+    <div class="modal">
+      <button class="modal-close" onclick="hideModal('rating-modal')">✕</button>
+      <div class="modal-header">
+        <h2>Rate Your Trade ⭐</h2>
+        <p>How was your experience?</p>
+      </div>
+      <div id="rating-modal-content"></div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
