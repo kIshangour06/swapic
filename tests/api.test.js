@@ -3,7 +3,7 @@ const assert = require('node:assert');
 
 const BASE_URL = 'http://localhost:5000';
 
-describe('BarterHub Europa API Test Suite', () => {
+describe('Swapic IN API Test Suite', () => {
   let authToken = '';
   let testUserId = '';
 
@@ -13,8 +13,8 @@ describe('BarterHub Europa API Test Suite', () => {
     const data = await res.json();
     assert.strictEqual(data.success, true);
     assert.strictEqual(data.status, 'healthy');
-    assert.strictEqual(data.platform, 'BarterHub Europa');
-    assert.strictEqual(data.version, '1.1.0');
+    assert.strictEqual(data.platform, 'Swapic IN');
+    assert.strictEqual(data.version, '1.2.0');
     assert.strictEqual(data.database, 'connected');
   });
 
@@ -29,23 +29,23 @@ describe('BarterHub Europa API Test Suite', () => {
     assert.strictEqual(data.pagination.limit, 6);
   });
 
-  test('3. GET /api/items with European location filter works', async () => {
-    const res = await fetch(`${BASE_URL}/api/items?location=Paris`);
+  test('3. GET /api/items with Indian location filter works', async () => {
+    const res = await fetch(`${BASE_URL}/api/items?location=Mumbai`);
     assert.strictEqual(res.status, 200);
     const data = await res.json();
     assert.strictEqual(data.success, true);
     assert.ok(Array.isArray(data.items));
     if (data.items.length > 0) {
-      assert.ok(data.items[0].location.toLowerCase().includes('paris'));
+      assert.ok(data.items[0].location.toLowerCase().includes('mumbai'));
     }
   });
 
-  test('4. POST /api/auth/login authenticates demo European user', async () => {
+  test('4. POST /api/auth/login authenticates demo Indian user', async () => {
     const res = await fetch(`${BASE_URL}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        email: 'julien@barterhub.eu',
+        email: 'aarav@swapic.in',
         password: 'password123'
       })
     });
@@ -53,7 +53,7 @@ describe('BarterHub Europa API Test Suite', () => {
     const data = await res.json();
     assert.strictEqual(data.success, true);
     assert.ok(data.token);
-    assert.strictEqual(data.user.email, 'julien@barterhub.eu');
+    assert.strictEqual(data.user.email, 'aarav@swapic.in');
     authToken = data.token;
     testUserId = data.user._id;
   });
@@ -66,7 +66,7 @@ describe('BarterHub Europa API Test Suite', () => {
     assert.strictEqual(res.status, 200);
     const data = await res.json();
     assert.strictEqual(data.success, true);
-    assert.strictEqual(data.user.email, 'julien@barterhub.eu');
+    assert.strictEqual(data.user.email, 'aarav@swapic.in');
   });
 
   test('6. GET /api/items/user/favorites returns user wishlist', async () => {

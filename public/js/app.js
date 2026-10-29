@@ -524,13 +524,13 @@ function renderItemCard(item, isOwner = false) {
 
   if (type === 'sell') {
     typeBadge = `<span class="badge-type badge-type-sell">🏷️ For Sale</span>`;
-    priceDisplay = `<span class="item-card-price-tag price-sell">€${item.price || item.estimatedValue || 0}</span>`;
+    priceDisplay = `<span class="item-card-price-tag price-sell">₹${(item.price || item.estimatedValue || 0).toLocaleString('en-IN')}</span>`;
   } else if (type === 'rent') {
     typeBadge = `<span class="badge-type badge-type-rent">⏱️ Rent</span>`;
-    priceDisplay = `<span class="item-card-price-tag price-rent">€${item.rentPrice || 0}/${item.rentPeriod || 'day'}</span>`;
+    priceDisplay = `<span class="item-card-price-tag price-rent">₹${(item.rentPrice || 0).toLocaleString('en-IN')}/${item.rentPeriod || 'day'}</span>`;
   } else {
     typeBadge = `<span class="badge-type badge-type-barter">🔄 Barter</span>`;
-    priceDisplay = item.estimatedValue ? `<span class="item-value">~€${item.estimatedValue}</span>` : `<span class="badge-cond">Trade</span>`;
+    priceDisplay = item.estimatedValue ? `<span class="item-value">~₹${Number(item.estimatedValue).toLocaleString('en-IN')}</span>` : `<span class="badge-cond">Swap</span>`;
   }
 
   return `
@@ -548,7 +548,7 @@ function renderItemCard(item, isOwner = false) {
       </div>
       <div class="item-card-footer">
         <div class="item-card-owner">
-          <img src="${avatarSrc}" class="avatar-xs" alt="${escHtml(owner?.username||'?')}" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(owner?.username||'?')}&background=6c63ff&color=fff&size=40'"/>
+          <img src="${avatarSrc}" class="avatar-xs" alt="${escHtml(owner?.username||'?')}" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(owner?.username||'?')}&background=b85d19&color=fff&size=40'"/>
           <span>${escHtml(owner?.username || 'Unknown')}</span>
           ${stars}
         </div>
@@ -571,7 +571,7 @@ async function viewItem(id) {
 
   const avatarSrc = owner.avatar
     ? owner.avatar
-    : `https://ui-avatars.com/api/?name=${encodeURIComponent(owner.username)}&background=6c63ff&color=fff&size=80`;
+    : `https://ui-avatars.com/api/?name=${encodeURIComponent(owner.username)}&background=b85d19&color=fff&size=80`;
 
   const isOwner = state.user && state.user._id === owner._id;
   const isLiked = state.user && item.likes?.includes(state.user._id);
@@ -580,50 +580,55 @@ async function viewItem(id) {
   let typeBanner = '';
   let actionPrimaryBtn = '';
 
+  const formattedPrice = (item.price || item.estimatedValue || 0).toLocaleString('en-IN');
+  const formattedRent = (item.rentPrice || 0).toLocaleString('en-IN');
+  const formattedDeposit = (item.deposit || 0).toLocaleString('en-IN');
+  const formattedEstVal = (item.estimatedValue || 0).toLocaleString('en-IN');
+
   if (type === 'sell') {
     typeBanner = `
       <div class="type-notice-banner notice-sell">
         <div>
-          <span style="font-size:11px;font-weight:700;text-transform:uppercase;color:#10b981;display:block">🏷️ Item For Direct Sale</span>
-          <strong style="font-size:24px;color:#10b981">€${item.price || item.estimatedValue || 0} EUR</strong>
-          <p style="margin:2px 0 0;font-size:13px;color:var(--text-muted)">Available for immediate purchase across the EU</p>
+          <span style="font-size:11px;font-weight:700;text-transform:uppercase;color:#15803d;display:block">🏷️ Item For Direct Sale</span>
+          <strong style="font-size:24px;color:#15803d">₹${formattedPrice} INR</strong>
+          <p style="margin:2px 0 0;font-size:13px;color:var(--text-muted)">Available for purchase across India with escrow protection</p>
         </div>
         <span class="badge-type badge-type-sell">For Sale</span>
       </div>`;
     actionPrimaryBtn = !isOwner && state.user
-      ? `<button class="btn btn-primary btn-xl" style="background:#10b981;border-color:#10b981" onclick="buyItemPrompt('${owner._id}', '${item._id}', '${escHtml(item.title)}', ${item.price || item.estimatedValue || 0})">⚡ Contact to Buy (€${item.price || item.estimatedValue || 0})</button>`
+      ? `<button class="btn btn-primary btn-xl" style="background:#15803d;border-color:#15803d" onclick="buyItemPrompt('${owner._id}', '${item._id}', '${escHtml(item.title)}', '${formattedPrice}')">⚡ Contact to Buy (₹${formattedPrice})</button>`
       : !state.user
-      ? `<button class="btn btn-primary btn-xl" onclick="showModal('login-modal')">Sign in to Buy</button>`
+      ? `<button class="btn btn-primary btn-xl" onclick="showPage('login')">Sign in to Buy</button>`
       : `<button class="btn btn-ghost" onclick="showModal('post-item-modal')">✏️ Edit Listing</button>`;
   } else if (type === 'rent') {
     typeBanner = `
       <div class="type-notice-banner notice-rent">
         <div>
-          <span style="font-size:11px;font-weight:700;text-transform:uppercase;color:#f59e0b;display:block">⏱️ Available For Rent</span>
-          <strong style="font-size:24px;color:#f59e0b">€${item.rentPrice || 0} / ${item.rentPeriod || 'day'}</strong>
-          <p style="margin:2px 0 0;font-size:13px;color:var(--text-muted)">Security Deposit: €${item.deposit || 0}</p>
+          <span style="font-size:11px;font-weight:700;text-transform:uppercase;color:#b45309;display:block">⏱️ Available For Rent</span>
+          <strong style="font-size:24px;color:#b45309">₹${formattedRent} / ${item.rentPeriod || 'day'}</strong>
+          <p style="margin:2px 0 0;font-size:13px;color:var(--text-muted)">Security Deposit: ₹${formattedDeposit}</p>
         </div>
         <span class="badge-type badge-type-rent">For Rent</span>
       </div>`;
     actionPrimaryBtn = !isOwner && state.user
-      ? `<button class="btn btn-primary btn-xl" style="background:#f59e0b;border-color:#f59e0b" onclick="rentItemPrompt('${owner._id}', '${item._id}', '${escHtml(item.title)}', ${item.rentPrice || 0}, '${item.rentPeriod || 'day'}')">⏱️ Rent This Item</button>`
+      ? `<button class="btn btn-primary btn-xl" style="background:#b45309;border-color:#b45309" onclick="rentItemPrompt('${owner._id}', '${item._id}', '${escHtml(item.title)}', '${formattedRent}', '${item.rentPeriod || 'day'}')">⏱️ Rent This Item</button>`
       : !state.user
-      ? `<button class="btn btn-primary btn-xl" onclick="showModal('login-modal')">Sign in to Rent</button>`
+      ? `<button class="btn btn-primary btn-xl" onclick="showPage('login')">Sign in to Rent</button>`
       : `<button class="btn btn-ghost" onclick="showModal('post-item-modal')">✏️ Edit Listing</button>`;
   } else {
     typeBanner = `
       <div class="type-notice-banner notice-barter">
         <div>
-          <span style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--primary-light);display:block">🔄 Barter / Troc Listing</span>
+          <span style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--primary);display:block">🔄 Barter / Swap Listing</span>
           <strong style="font-size:18px;color:var(--text)">Trade For Goods or Services</strong>
-          <p style="margin:2px 0 0;font-size:13px;color:var(--text-muted)">Exchange what you have with this European owner</p>
+          <p style="margin:2px 0 0;font-size:13px;color:var(--text-muted)">Exchange what you have with this Indian trader</p>
         </div>
         <span class="badge-type badge-type-barter">Barter Trade</span>
       </div>`;
     actionPrimaryBtn = !isOwner && state.user
       ? `<button class="btn btn-primary btn-xl" onclick="openTradeModal('${owner._id}', '${item._id}')">🤝 Propose Trade</button>`
       : !state.user
-      ? `<button class="btn btn-primary btn-xl" onclick="showModal('login-modal')">Sign in to Trade</button>`
+      ? `<button class="btn btn-primary btn-xl" onclick="showPage('login')">Sign in to Trade</button>`
       : `<button class="btn btn-ghost" onclick="showModal('post-item-modal')">✏️ Edit Listing</button>`;
   }
 
@@ -652,8 +657,8 @@ async function viewItem(id) {
           <div class="item-detail-meta">
             <div class="meta-item">
               <small>${type === 'sell' ? 'Price' : type === 'rent' ? 'Rental Rate' : 'Estimated Value'}</small>
-              <span style="font-weight:700;color:var(--accent)">
-                ${type === 'sell' ? '€'+(item.price||item.estimatedValue) : type === 'rent' ? '€'+item.rentPrice+'/'+(item.rentPeriod||'day') : (item.estimatedValue ? '€'+item.estimatedValue : 'Trade')}
+              <span style="font-weight:700;color:var(--primary)">
+                ${type === 'sell' ? '₹'+formattedPrice : type === 'rent' ? '₹'+formattedRent+'/'+(item.rentPeriod||'day') : (item.estimatedValue ? '₹'+formattedEstVal : 'Trade')}
               </span>
             </div>
             <div class="meta-item">
@@ -706,7 +711,7 @@ function buyItemPrompt(ownerId, itemId, title, price) {
   setTimeout(() => {
     const input = document.getElementById('chat-input');
     if (input) {
-      input.value = `Hello! I would like to purchase "${title}" for €${price}. Can we arrange collection or shipping?`;
+      input.value = `Namaste! I would like to purchase "${title}" for ₹${price}. Can we arrange collection or shipping?`;
       input.focus();
     }
   }, 350);
@@ -717,7 +722,7 @@ function rentItemPrompt(ownerId, itemId, title, rate, period) {
   setTimeout(() => {
     const input = document.getElementById('chat-input');
     if (input) {
-      input.value = `Hello! I am interested in renting "${title}" at €${rate}/${period}. When is it available?`;
+      input.value = `Namaste! I am interested in renting "${title}" at ₹${rate}/${period}. When is it available?`;
       input.focus();
     }
   }, 350);
@@ -899,7 +904,7 @@ function renderTradeCard(trade) {
   if (trade.status === 'completed') {
     const myRated = isProposer ? trade.rating?.proposerRating : trade.rating?.receiverRating;
     if (!myRated) {
-      actions += `<button class="btn btn-warning btn-sm" onclick="openRatingModal('${trade._id}')">⭐ Rate European Trader</button>`;
+      actions += `<button class="btn btn-warning btn-sm" onclick="openRatingModal('${trade._id}')">⭐ Rate Indian Trader</button>`;
     } else {
       actions += `<span style="font-size:13px;color:var(--gold)">⭐ You rated: ${myRated}/5</span>`;
     }
@@ -1343,8 +1348,8 @@ async function fetchProfileReviews(userId) {
           <div style="display:flex;align-items:center;gap:10px">
             <img src="${r.reviewer?.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(r.reviewer?.username||'?')}&background=6c63ff&color=fff`}" class="avatar-xs" alt="${escHtml(r.reviewer?.username||'')}" onerror="this.style.display='none'"/>
             <div>
-              <strong>${escHtml(r.reviewer?.username || 'European Trader')}</strong>
-              <div style="font-size:12px;color:var(--text-muted)">${r.reviewer?.location || 'Europe'} · ${timeAgo(r.createdAt)}</div>
+              <strong>${escHtml(r.reviewer?.username || 'Indian Trader')}</strong>
+              <div style="font-size:12px;color:var(--text-muted)">${r.reviewer?.location || 'India 🇮🇳'} · ${timeAgo(r.createdAt)}</div>
             </div>
           </div>
           <div class="review-rating">${renderStars(r.rating)} <span style="font-weight:700;color:var(--gold)">${r.rating}/5</span></div>
@@ -1353,7 +1358,7 @@ async function fetchProfileReviews(userId) {
       </div>
     `).join('');
   } else {
-    container.innerHTML = '<div class="review-empty">🌟 No written reviews yet for this trader. Completed trades are protected by BarterHub Europa escrow.</div>';
+    container.innerHTML = '<div class="review-empty">🌟 No written reviews yet for this trader. Completed trades are protected by Swapic IN escrow.</div>';
   }
 }
 

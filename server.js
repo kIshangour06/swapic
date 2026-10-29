@@ -86,8 +86,8 @@ app.get('/api/health', (req, res) => {
   res.json({
     success: true,
     status: 'healthy',
-    platform: 'BarterHub Europa',
-    version: '1.1.0',
+    platform: 'Swapic IN',
+    version: '1.2.0',
     timestamp: new Date().toISOString(),
     database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
     uptimeSeconds: Math.floor(process.uptime())
@@ -134,7 +134,7 @@ const ALT_PORT = 8000;
   await seedDatabase();
 
   server.listen(PORT, () => {
-    console.log(`🚀 Barter System Server running on port ${PORT}`);
+    console.log(`🚀 Swapic IN Server running on port ${PORT}`);
     console.log(`📱 Frontend: http://localhost:${PORT}`);
     console.log(`🔧 API: http://localhost:${PORT}/api`);
   });

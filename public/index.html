@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BarterHub Europa — L'Art du Troc, Achat & Location en Europe</title>
-  <meta name="description" content="BarterHub Europa is the premier European peer-to-peer exchange platform. Trade items without money, buy pre-loved treasures in Euros, or rent gear by the day across Europe." />
+  <title>Swapic IN — Peer-to-Peer Barter, Sell & Rent in India</title>
+  <meta name="description" content="Swapic IN is India's premier peer-to-peer exchange platform. Trade items without money, buy pre-loved treasures in Rupees, or rent professional gear by the day across India." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🇪🇺</text></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🇮🇳</text></svg>" />
 </head>
 <body>
   <!-- Toast container -->
@@ -29,10 +29,10 @@
   <nav id="navbar" class="navbar">
     <div class="nav-container">
       <a href="#" class="nav-logo" onclick="showPage('home')">
-        <span class="logo-icon">🇪🇺</span>
+        <span class="logo-icon">🇮🇳</span>
         <div class="logo-brand">
-          <span class="logo-text">BarterHub</span>
-          <span class="logo-subtext">EUROPA</span>
+          <span class="logo-text">Swapic</span>
+          <span class="logo-subtext">IN</span>
         </div>
       </a>
       <div class="nav-links" id="nav-links">
@@ -47,7 +47,7 @@
       <div class="nav-actions">
         <div id="guest-actions" class="guest-actions">
           <button class="btn btn-ghost" onclick="showPage('login')">Sign In</button>
-          <button class="btn btn-primary" onclick="showPage('login', 'register')">Join Europa</button>
+          <button class="btn btn-primary" onclick="showPage('login', 'register')">Join Swapic</button>
         </div>
         <div id="user-actions" class="user-actions hidden">
           <button class="btn btn-primary btn-sm" onclick="promptServiceChoice()">+ Post (Sell / Rent / Barter)</button>
@@ -80,11 +80,11 @@
   <div class="demo-bar" id="demo-bar">
     <div class="demo-bar-inner">
       <span class="demo-bar-label">⚡ Quick Demo Login:</span>
-      <button class="demo-chip" onclick="quickLogin('julien@barterhub.eu')">🇫🇷 Julien (Paris)</button>
-      <button class="demo-chip" onclick="quickLogin('elena@barterhub.eu')">🇩🇪 Elena (Berlin)</button>
-      <button class="demo-chip" onclick="quickLogin('lars@barterhub.eu')">🇳🇱 Lars (Amsterdam)</button>
-      <button class="demo-chip" onclick="quickLogin('sofia@barterhub.eu')">🇮🇹 Sofia (Milan)</button>
-      <button class="demo-chip" onclick="quickLogin('mateo@barterhub.eu')">🇪🇸 Mateo (Barcelona)</button>
+      <button class="demo-chip" onclick="quickLogin('aarav@swapic.in')">🇮🇳 Aarav (Mumbai)</button>
+      <button class="demo-chip" onclick="quickLogin('ananya@swapic.in')">🇮🇳 Ananya (Bengaluru)</button>
+      <button class="demo-chip" onclick="quickLogin('rohit@swapic.in')">🇮🇳 Rohit (Delhi NCR)</button>
+      <button class="demo-chip" onclick="quickLogin('priya@swapic.in')">🇮🇳 Priya (Hyderabad)</button>
+      <button class="demo-chip" onclick="quickLogin('vikram@swapic.in')">🇮🇳 Vikram (Pune)</button>
     </div>
   </div>
 
@@ -96,26 +96,26 @@
       <div class="hero">
         <div class="hero-bg"></div>
         <div class="hero-content">
-          <div class="hero-badge">✨ 🇪🇺 European Peer-to-Peer Marketplace · Troc, Vente & Location</div>
-          <h1 class="hero-title">Trade, Sell & Rent Across Europe,<br/><span class="gradient-text">L'Art de l'Échange</span></h1>
-          <p class="hero-subtitle">Exchange pre-loved items without money, purchase directly in € Euros, or rent professional gear by the day across Paris, Berlin, Amsterdam, Milan and beyond.</p>
+          <div class="hero-badge">✨ 🇮🇳 India's Premier Peer-to-Peer Marketplace · Swap, Sell & Rent</div>
+          <h1 class="hero-title">Swap, Sell & Rent Across India,<br/><span class="gradient-text">The Art of Smart Exchange</span></h1>
+          <p class="hero-subtitle">Exchange pre-loved items without money, purchase directly in ₹ Indian Rupees, or rent professional cameras, bikes & tools by the day across Mumbai, Bengaluru, Delhi NCR, Hyderabad and beyond.</p>
           <div class="hero-actions">
             <button class="btn btn-primary btn-xl" onclick="showPage('browse')">Explore All Listings</button>
             <button class="btn btn-ghost btn-xl" onclick="promptServiceChoice()">+ Post Listing (Sell / Rent / Barter)</button>
           </div>
           <div class="hero-stats">
-            <div class="stat"><span id="stat-users">28,400</span><small>European Traders</small></div>
-            <div class="stat"><span id="stat-items">14,250</span><small>Active Listings</small></div>
-            <div class="stat"><span id="stat-trades">9,820</span><small>Deals Completed</small></div>
+            <div class="stat"><span id="stat-users">34,500</span><small>Indian Traders</small></div>
+            <div class="stat"><span id="stat-items">18,200</span><small>Active Listings</small></div>
+            <div class="stat"><span id="stat-trades">12,400</span><small>Deals Completed</small></div>
           </div>
         </div>
         <div class="hero-illustration">
           <div class="floating-card card-1">
             <div class="item-preview">
-              <span class="item-emoji">🎻</span>
+              <span class="item-emoji">🎸</span>
               <div>
-                <strong>Höfner Bass</strong>
-                <small>Berlin 🇩🇪 · For Synth</small>
+                <strong>Fender Stratocaster</strong>
+                <small>Bengaluru 🇮🇳 · For Synth</small>
               </div>
             </div>
           </div>
@@ -123,8 +123,8 @@
             <div class="item-preview">
               <span class="item-emoji">📷</span>
               <div>
-                <strong>Sony A7IV / Leica</strong>
-                <small>Paris 🇫🇷 · Barter</small>
+                <strong>Sony A7IV / Zeiss</strong>
+                <small>Mumbai 🇮🇳 · Barter</small>
               </div>
             </div>
           </div>
@@ -132,8 +132,8 @@
             <div class="item-preview">
               <span class="item-emoji">🚴</span>
               <div>
-                <strong>Canyon Carbon Bike</strong>
-                <small>Amsterdam 🇳🇱 · Trade</small>
+                <strong>Trek Marlin MTB</strong>
+                <small>Delhi NCR 🇮🇳 · Trade</small>
               </div>
             </div>
           </div>
@@ -280,22 +280,23 @@
             </select>
           </div>
           <div class="filter-group">
-            <label>European Location</label>
+            <label>Location in India</label>
             <select id="filter-location" class="input" onchange="loadItems()">
-              <option value="all">🇪🇺 All Europe</option>
-              <option value="Paris">🇫🇷 Paris, France</option>
-              <option value="Berlin">🇩🇪 Berlin, Germany</option>
-              <option value="Amsterdam">🇳🇱 Amsterdam, Netherlands</option>
-              <option value="Milan">🇮🇹 Milan, Italy</option>
-              <option value="Barcelona">🇪🇸 Barcelona, Spain</option>
-              <option value="Vienna">🇦🇹 Vienna, Austria</option>
+              <option value="all">🇮🇳 All India</option>
+              <option value="Mumbai">🇮🇳 Mumbai, Maharashtra</option>
+              <option value="Bengaluru">🇮🇳 Bengaluru, Karnataka</option>
+              <option value="Delhi">🇮🇳 Delhi NCR</option>
+              <option value="Hyderabad">🇮🇳 Hyderabad, Telangana</option>
+              <option value="Pune">🇮🇳 Pune, Maharashtra</option>
+              <option value="Chennai">🇮🇳 Chennai, Tamil Nadu</option>
+              <option value="Kolkata">🇮🇳 Kolkata, West Bengal</option>
             </select>
           </div>
           <div class="filter-group">
-            <label>Value / Price Range (€ EUR)</label>
+            <label>Value / Price Range (₹ INR)</label>
             <div style="display:flex;gap:8px">
-              <input type="number" id="filter-min-val" class="input" placeholder="Min €" min="0" oninput="debounceSearch()" style="width:50%" />
-              <input type="number" id="filter-max-val" class="input" placeholder="Max €" min="0" oninput="debounceSearch()" style="width:50%" />
+              <input type="number" id="filter-min-val" class="input" placeholder="Min ₹" min="0" oninput="debounceSearch()" style="width:50%" />
+              <input type="number" id="filter-max-val" class="input" placeholder="Max ₹" min="0" oninput="debounceSearch()" style="width:50%" />
             </div>
           </div>
           <div class="filter-group">
@@ -341,7 +342,7 @@
     <section id="page-favorites" class="page">
       <div class="page-header">
         <h1>My Favorites ❤️</h1>
-        <p>Pre-loved European items you have saved</p>
+        <p>Pre-loved Indian items you have saved</p>
       </div>
       <div id="favorites-grid" class="items-grid"></div>
     </section>
@@ -425,9 +426,9 @@
         <div class="auth-card">
           <!-- Auth Brand Header -->
           <div class="auth-brand">
-            <span class="auth-flag">🇪🇺</span>
-            <div class="auth-logo-text">BarterHub Europa</div>
-            <p class="auth-tagline">L'Art de l'Échange, Achat & Location de Matériel en Europe</p>
+            <span class="auth-flag">🇮🇳</span>
+            <div class="auth-logo-text">Swapic <span style="color:var(--primary);font-size:20px">IN</span></div>
+            <p class="auth-tagline">Peer-to-Peer Barter, Buy & Rent Across India</p>
           </div>
 
           <!-- Auth Mode Segmented Tabs -->
@@ -436,34 +437,34 @@
             <button class="auth-tab" id="tab-auth-register" onclick="switchAuthTab('register')">Create Account</button>
           </div>
 
-          <!-- Instant European Demo Quick Sign-in -->
+          <!-- Instant Indian Demo Quick Sign-in -->
           <div class="auth-demo-section">
             <div class="auth-demo-title">⚡ Instant Demo Sign-In (One-Click)</div>
             <div class="auth-demo-grid">
-              <button type="button" class="auth-demo-btn" onclick="quickLogin('julien@barterhub.eu')">
-                <span class="demo-flag">🇫🇷</span>
-                <span class="demo-user">Julien</span>
-                <span class="demo-city">Paris</span>
+              <button type="button" class="auth-demo-btn" onclick="quickLogin('aarav@swapic.in')">
+                <span class="demo-flag">🇮🇳</span>
+                <span class="demo-user">Aarav</span>
+                <span class="demo-city">Mumbai</span>
               </button>
-              <button type="button" class="auth-demo-btn" onclick="quickLogin('elena@barterhub.eu')">
-                <span class="demo-flag">🇩🇪</span>
-                <span class="demo-user">Elena</span>
-                <span class="demo-city">Berlin</span>
+              <button type="button" class="auth-demo-btn" onclick="quickLogin('ananya@swapic.in')">
+                <span class="demo-flag">🇮🇳</span>
+                <span class="demo-user">Ananya</span>
+                <span class="demo-city">Bengaluru</span>
               </button>
-              <button type="button" class="auth-demo-btn" onclick="quickLogin('lars@barterhub.eu')">
-                <span class="demo-flag">🇳🇱</span>
-                <span class="demo-user">Lars</span>
-                <span class="demo-city">Amsterdam</span>
+              <button type="button" class="auth-demo-btn" onclick="quickLogin('rohit@swapic.in')">
+                <span class="demo-flag">🇮🇳</span>
+                <span class="demo-user">Rohit</span>
+                <span class="demo-city">Delhi NCR</span>
               </button>
-              <button type="button" class="auth-demo-btn" onclick="quickLogin('sofia@barterhub.eu')">
-                <span class="demo-flag">🇮🇹</span>
-                <span class="demo-user">Sofia</span>
-                <span class="demo-city">Milan</span>
+              <button type="button" class="auth-demo-btn" onclick="quickLogin('priya@swapic.in')">
+                <span class="demo-flag">🇮🇳</span>
+                <span class="demo-user">Priya</span>
+                <span class="demo-city">Hyderabad</span>
               </button>
-              <button type="button" class="auth-demo-btn" onclick="quickLogin('mateo@barterhub.eu')">
-                <span class="demo-flag">🇪🇸</span>
-                <span class="demo-user">Mateo</span>
-                <span class="demo-city">Barcelona</span>
+              <button type="button" class="auth-demo-btn" onclick="quickLogin('vikram@swapic.in')">
+                <span class="demo-flag">🇮🇳</span>
+                <span class="demo-user">Vikram</span>
+                <span class="demo-city">Pune</span>
               </button>
             </div>
           </div>
@@ -473,14 +474,14 @@
             <form id="dedicated-login-form" onsubmit="handleDedicatedLogin(event)">
               <div class="form-group">
                 <label for="dedicated-login-email">Email Address</label>
-                <input type="email" id="dedicated-login-email" class="input" placeholder="e.g. julien@barterhub.eu" required />
+                <input type="email" id="dedicated-login-email" class="input" placeholder="e.g. aarav@swapic.in" required />
               </div>
               <div class="form-group">
                 <label for="dedicated-login-password">Password</label>
                 <input type="password" id="dedicated-login-password" class="input" placeholder="••••••••" required />
               </div>
               <button type="submit" class="btn btn-primary btn-full btn-lg" id="dedicated-login-btn">
-                Sign In to BarterHub
+                Sign In to Swapic
               </button>
             </form>
           </div>
@@ -490,19 +491,19 @@
             <form id="dedicated-register-form" onsubmit="handleDedicatedRegister(event)">
               <div class="form-group">
                 <label for="dedicated-reg-username">Username</label>
-                <input type="text" id="dedicated-reg-username" class="input" placeholder="e.g. claudia_rome" required minlength="3" />
+                <input type="text" id="dedicated-reg-username" class="input" placeholder="e.g. rohit_delhi" required minlength="3" />
               </div>
               <div class="form-group">
                 <label for="dedicated-reg-email">Email Address</label>
-                <input type="email" id="dedicated-reg-email" class="input" placeholder="you@domain.eu" required />
+                <input type="email" id="dedicated-reg-email" class="input" placeholder="you@swapic.in" required />
               </div>
               <div class="form-group">
                 <label for="dedicated-reg-password">Password</label>
                 <input type="password" id="dedicated-reg-password" class="input" placeholder="At least 6 characters" required minlength="6" />
               </div>
               <div class="form-group">
-                <label for="dedicated-reg-location">European Location</label>
-                <input type="text" id="dedicated-reg-location" class="input" placeholder="e.g. Rome, Italy 🇮🇹" />
+                <label for="dedicated-reg-location">Location in India</label>
+                <input type="text" id="dedicated-reg-location" class="input" placeholder="e.g. Bengaluru, Karnataka 🇮🇳" />
               </div>
               <button type="submit" class="btn btn-primary btn-full btn-lg" id="dedicated-reg-btn">
                 Create Free Account
@@ -514,9 +515,9 @@
           <div class="auth-security-badges">
             <span>🛡️ Escrow Handover Protection</span>
             <span>·</span>
-            <span>🇪🇺 100% Peer-to-Peer</span>
+            <span>🇮🇳 100% Made in India</span>
             <span>·</span>
-            <span>⭐ Verified Community</span>
+            <span>⭐ Verified Indian Community</span>
           </div>
         </div>
       </div>
@@ -530,22 +531,22 @@
     <div class="modal modal-lg service-intent-modal-card">
       <button class="modal-close" onclick="hideModal('service-intent-modal')">✕</button>
       <div class="service-intent-header">
-        <span class="service-intent-flag">🇪🇺</span>
+        <span class="service-intent-flag">🇮🇳</span>
         <h2>Choose Your Mode of Service</h2>
-        <p>What would you like to do on BarterHub Europa? Select your servicing option to continue:</p>
+        <p>What would you like to do on Swapic IN? Select your servicing option to continue:</p>
       </div>
 
       <div class="service-cards-grid">
         <!-- 1. Barter / Exchange (Troc) -->
         <div class="service-choice-card choice-barter" onclick="chooseServiceMode('barter')">
-          <div class="service-choice-badge">🔄 Cashless Troc</div>
+          <div class="service-choice-badge">🔄 Cashless Barter</div>
           <div class="service-choice-icon">🤝</div>
           <h3>Barter & Exchange</h3>
-          <p>Exchange pre-loved treasures with collectors across Europe without spending money. Offer what you have for what you need.</p>
+          <p>Trade pre-loved treasures with collectors and creators across India without spending money. Offer what you have for what you need.</p>
           <div class="service-choice-highlight">✓ 0% commission · Escrow Protected</div>
           <div class="service-choice-btns">
             <button class="btn btn-primary btn-full btn-sm" onclick="event.stopPropagation(); startServiceListing('barter')">
-              + Post Barter / Troc
+              + Post Barter / Swap
             </button>
             <button class="btn btn-ghost btn-full btn-xs" onclick="event.stopPropagation(); browseServiceMode('barter')">
               Browse Barter Items →
@@ -555,14 +556,14 @@
 
         <!-- 2. Direct Sale (Vente) -->
         <div class="service-choice-card choice-sell" onclick="chooseServiceMode('sell')">
-          <div class="service-choice-badge badge-sell">🏷️ Achat & Vente en €</div>
-          <div class="service-choice-icon">💶</div>
+          <div class="service-choice-badge badge-sell">🏷️ Direct Cash in ₹</div>
+          <div class="service-choice-icon">💵</div>
           <h3>Sell for Direct Cash</h3>
-          <p>List your items with a fixed price in Euros (€). Connect with verified European buyers for immediate sale and payment.</p>
-          <div class="service-choice-highlight">✓ Fixed pricing in € · Fast liquidity</div>
+          <p>List your items with a fixed price in Indian Rupees (₹). Connect with verified Indian buyers for immediate sale and payment.</p>
+          <div class="service-choice-highlight">✓ Fixed pricing in ₹ · Fast liquidity</div>
           <div class="service-choice-btns">
             <button class="btn btn-success btn-full btn-sm" onclick="event.stopPropagation(); startServiceListing('sell')">
-              + List for Sale (€)
+              + List for Sale (₹)
             </button>
             <button class="btn btn-ghost btn-full btn-xs" onclick="event.stopPropagation(); browseServiceMode('sell')">
               Browse Items for Sale →
@@ -572,11 +573,11 @@
 
         <!-- 3. Rent Equipment (Location) -->
         <div class="service-choice-card choice-rent" onclick="chooseServiceMode('rent')">
-          <div class="service-choice-badge badge-rent">⏱️ Location de Matériel</div>
+          <div class="service-choice-badge badge-rent">⏱️ Equipment Rental</div>
           <div class="service-choice-icon">📷</div>
-          <h3>Rent Equipment</h3>
-          <p>Rent out camera gear, audio equipment, studio synthesizers, bikes, or roof boxes by the hour, day, week, or month.</p>
-          <div class="service-choice-highlight">✓ Daily € rates · Security deposit safeguard</div>
+          <h3>Rent Out Equipment</h3>
+          <p>Rent out camera gear, audio equipment, studio synthesizers, bikes, or tools by the day, week, or month.</p>
+          <div class="service-choice-highlight">✓ Daily ₹ rates · Security deposit safeguard</div>
           <div class="service-choice-btns">
             <button class="btn btn-warning btn-full btn-sm" onclick="event.stopPropagation(); startServiceListing('rent')">
               + Post Rental Listing
@@ -590,7 +591,7 @@
 
       <div class="service-intent-footer">
         <button class="btn-link" onclick="hideModal('service-intent-modal'); showPage('browse')">
-          Just exploring? Browse all European listings →
+          Just exploring? Browse all listings across India →
         </button>
       </div>
     </div>
@@ -601,13 +602,13 @@
     <div class="modal">
       <button class="modal-close" onclick="hideModal('login-modal')">✕</button>
       <div class="modal-header">
-        <h2>Welcome Back! 👋</h2>
-        <p>Sign in to your BarterHub account</p>
+        <h2>Welcome Back to Swapic! 👋</h2>
+        <p>Sign in to your Swapic IN account</p>
       </div>
       <form id="login-form" onsubmit="login(event)">
         <div class="form-group">
           <label for="login-email">Email</label>
-          <input type="email" id="login-email" class="input" placeholder="you@example.com" required />
+          <input type="email" id="login-email" class="input" placeholder="aarav@swapic.in" required />
         </div>
         <div class="form-group">
           <label for="login-password">Password</label>
@@ -624,25 +625,25 @@
     <div class="modal">
       <button class="modal-close" onclick="hideModal('register-modal')">✕</button>
       <div class="modal-header">
-        <h2>Join BarterHub 🔄</h2>
-        <p>Create your free account and start trading</p>
+        <h2>Join Swapic IN 🇮🇳</h2>
+        <p>Create your free account and start trading across India</p>
       </div>
       <form id="register-form" onsubmit="register(event)">
         <div class="form-group">
           <label for="reg-username">Username</label>
-          <input type="text" id="reg-username" class="input" placeholder="Choose a username" required minlength="3" />
+          <input type="text" id="reg-username" class="input" placeholder="e.g. rohit_delhi" required minlength="3" />
         </div>
         <div class="form-group">
           <label for="reg-email">Email</label>
-          <input type="email" id="reg-email" class="input" placeholder="you@example.com" required />
+          <input type="email" id="reg-email" class="input" placeholder="you@swapic.in" required />
         </div>
         <div class="form-group">
           <label for="reg-password">Password</label>
           <input type="password" id="reg-password" class="input" placeholder="At least 6 characters" required minlength="6" />
         </div>
         <div class="form-group">
-          <label for="reg-location">Location (optional)</label>
-          <input type="text" id="reg-location" class="input" placeholder="City, Country" />
+          <label for="reg-location">Location in India (optional)</label>
+          <input type="text" id="reg-location" class="input" placeholder="e.g. Mumbai, Maharashtra 🇮🇳" />
         </div>
         <button type="submit" class="btn btn-primary btn-full" id="register-btn">Create Account</button>
       </form>
@@ -665,7 +666,7 @@
           <div class="listing-type-selector">
             <button type="button" class="type-option-btn selected" id="opt-barter" onclick="selectListingType('barter')">
               <span style="font-size:22px">🔄</span>
-              <span>Barter (Trade)</span>
+              <span>Barter (Swap)</span>
             </button>
             <button type="button" class="type-option-btn opt-sell" id="opt-sell" onclick="selectListingType('sell')">
               <span style="font-size:22px">🏷️</span>
@@ -717,7 +718,7 @@
             </select>
           </div>
           <div class="form-group">
-            <label>Estimated Market Value (€ EUR)</label>
+            <label>Estimated Market Value (₹ INR)</label>
             <input type="number" id="item-value" class="input" placeholder="0" min="0" />
           </div>
         </div>
@@ -725,33 +726,33 @@
         <!-- Dynamic Group: Barter Wishlist -->
         <div id="field-barter-group" class="form-group">
           <label>Looking For in Exchange (Barter Wishlist)</label>
-          <input type="text" id="item-looking-for" class="input" placeholder="e.g. Vintage Leica M6, Moog synth, Canyon road bike..." maxlength="300" />
+          <input type="text" id="item-looking-for" class="input" placeholder="e.g. Sony A7IV, Fender Stratocaster, Trek road bike..." maxlength="300" />
         </div>
 
         <!-- Dynamic Group: Sell Price -->
         <div id="field-sell-group" class="form-group hidden">
-          <label>Selling Price (€ EUR) *</label>
-          <input type="number" id="item-price" class="input" placeholder="e.g. 250" min="1" step="any" />
+          <label>Selling Price (₹ INR) *</label>
+          <input type="number" id="item-price" class="input" placeholder="e.g. 25000" min="1" step="any" />
         </div>
 
         <!-- Dynamic Group: Rent Details -->
         <div id="field-rent-group" class="form-grid hidden">
           <div class="form-group">
-            <label>Rental Rate (€ EUR) *</label>
-            <input type="number" id="item-rent-price" class="input" placeholder="e.g. 25" min="1" step="any" />
+            <label>Rental Rate (₹ INR) *</label>
+            <input type="number" id="item-rent-price" class="input" placeholder="e.g. 2500" min="1" step="any" />
           </div>
           <div class="form-group">
             <label>Rental Period *</label>
             <select id="item-rent-period" class="input">
-              <option value="day">Per Day (Par Jour)</option>
-              <option value="week">Per Week (Par Semaine)</option>
-              <option value="month">Per Month (Par Mois)</option>
-              <option value="hour">Per Hour (Par Heure)</option>
+              <option value="day">Per Day (Daily)</option>
+              <option value="week">Per Week (Weekly)</option>
+              <option value="month">Per Month (Monthly)</option>
+              <option value="hour">Per Hour (Hourly)</option>
             </select>
           </div>
           <div class="form-group">
-            <label>Security Deposit (€ EUR)</label>
-            <input type="number" id="item-deposit" class="input" placeholder="e.g. 100" min="0" step="any" />
+            <label>Security Deposit (₹ INR)</label>
+            <input type="number" id="item-deposit" class="input" placeholder="e.g. 10000" min="0" step="any" />
           </div>
         </div>
 
